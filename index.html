@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Troncs</title>
+    <script src='js/sql.js'></script>
+    <link rel="stylesheet" href="jquery-ui.min.css">
+    <script src="external/jquery/jquery.js"></script>
+    <script src="jquery-ui.min.js"></script>
+    <script>
+		$(function() {
+				$("#QuintesP1").load("textdata/Quintes.txt");
+                $("#QuintesP2").load("textdata/Quintes.txt");
+                $("#QuintesB1").load("textdata/Quintes.txt");
+                $("#QuintesB2").load("textdata/Quintes.txt");
+                $("#QuartsP1").load("textdata/Quarts.txt");
+                $("#QuartsP2").load("textdata/Quarts.txt");
+                $("#QuartsB1").load("textdata/Quarts.txt");
+                $("#QuartsB2").load("textdata/Quarts.txt");
+                $("#TersosP1").load("textdata/Tersos.txt");
+                $("#TersosP2").load("textdata/Tersos.txt");
+                $("#TersosB1").load("textdata/Tersos.txt");
+                $("#TersosB2").load("textdata/Tersos.txt");
+                $("#SegonsP1").load("textdata/Segons.txt");
+                $("#SegonsP2").load("textdata/Segons.txt");
+                $("#SegonsB1").load("textdata/Segons.txt");
+                $("#SegonsB2").load("textdata/Segons.txt");
+                $("#BaixosFP1").load("textdata/Baixos.txt");
+                $("#BaixosFP2").load("textdata/Baixos.txt");
+                $("#BaixosFB1").load("textdata/Baixos.txt");
+                $("#BaixosFB2").load("textdata/Baixos.txt");
+                $("#BaixosP1").load("textdata/Baixos.txt");
+                $("#BaixosP2").load("textdata/Baixos.txt");
+                $("#BaixosB1").load("textdata/Baixos.txt");
+                $("#BaixosB2").load("textdata/Baixos.txt");
+                $( "select" ).change(function(){actualitza();});
+    });
+	</script>
+    
+    <script type="text/javascript">
+    
+    function compara(v1,v2,v3,v4) {
+        var retorn = "";
+        if (v1 == Math.min(v1,v2,v3,v4)) retorn = retorn+"A";
+        if (v2 == Math.min(v1,v2,v3,v4)) retorn = retorn+"B";
+        if (v3 == Math.min(v1,v2,v3,v4)) retorn = retorn+"C";
+        if (v4 == Math.min(v1,v2,v3,v4)) retorn = retorn+"D";
+        return retorn;
+    }
+    
+  
+    function actualitza() {
+        var sa = parseInt($( "#QuintesP1" ).val());var sb = parseInt($( "#QuintesB1" ).val());var sc = parseInt($( "#QuintesP2" ).val());var sd = parseInt($( "#QuintesB2" ).val());
+        var qa = parseInt($( "#QuartsP1" ).val());var qb = parseInt($( "#QuartsB1" ).val());var qc = parseInt($( "#QuartsP2" ).val());var qd = parseInt($( "#QuartsB2" ).val());
+        var ca = parseInt($( "#TersosP1" ).val());var cb = parseInt($( "#TersosB1" ).val());var cc = parseInt($( "#TersosP2" ).val());var cd = parseInt($( "#TersosB2" ).val());
+        var ta = parseInt($( "#SegonsP1" ).val());var tb = parseInt($( "#SegonsB1" ).val());var tc = parseInt($( "#SegonsP2" ).val());var td = parseInt($( "#SegonsB2" ).val());
+        var fba = parseInt($( "#BaixosFP1" ).val());var fbb = parseInt($( "#BaixosFB1" ).val());var fbc = parseInt($( "#BaixosFP2" ).val());var fbd = parseInt($( "#BaixosFB2" ).val());
+        var ba = parseInt($( "#BaixosP1" ).val());var bb = parseInt($( "#BaixosB1" ).val());var bc = parseInt($( "#BaixosP2" ).val());var bd = parseInt($( "#BaixosB2" ).val());
+        $("#mas").text(compara(sa,sb,sc,sd));
+        $("#maq").text(compara(qa,qb,qc,qd));
+        $("#mac").text(compara(ca,cb,cc,cd));
+        $("#mat").text(compara(ta,tb,tc,td));
+        $("#mafb").text(compara(fba,fbb,fbc,fbd));
+        $("#mab").text(compara(ba,bb,bc,bd));
+        var ssa=sa+qa+ca+ta+fba+ba;var sqa=qa+ca+ta+fba+ba;var sca=ca+ta+fba+ba;var sta=ta+fba+ba;var sfba=fba+ba;
+        var ssb=sb+qb+cb+tb+fbb+bb;var sqb=qb+cb+tb+fbb+bb;var scb=cb+tb+fbb+bb;var stb=tb+fbb+bb;var sfbb=fbb+bb;
+        var ssc=sc+qc+cc+tc+fbc+bc;var sqc=qc+cc+tc+fbc+bc;var scc=cc+tc+fbc+bc;var stc=tc+fbc+bc;var sfbc=fbc+bc;
+        var ssd=sd+qd+cd+td+fbd+bd;var sqd=qd+cd+td+fbd+bd;var scd=cd+td+fbd+bd;var std=td+fbd+bd;var sfbd=fbd+bd;
+        $("#rbp1").text(ba-Math.min(ba,bb,bc,bd));$("#rbb1").text(bb-Math.min(ba,bb,bc,bd));
+        $("#rbp2").text(bc-Math.min(ba,bb,bc,bd));$("#rbb2").text(bd-Math.min(ba,bb,bc,bd));
+        $("#rfbp1").text(sfba-Math.min(sfba,sfbb,sfbc,sfbd));$("#rfbb1").text(sfbb-Math.min(sfba,sfbb,sfbc,sfbd));
+        $("#rfbp2").text(sfbc-Math.min(sfba,sfbb,sfbc,sfbd));$("#rfbb2").text(sfbd-Math.min(sfba,sfbb,sfbc,sfbd));
+        $("#rtp1").text(sta-Math.min(sta,stb,stc,std));$("#rtb1").text(stb-Math.min(sta,stb,stc,std));
+        $("#rtp2").text(stc-Math.min(sta,stb,stc,std));$("#rtb2").text(std-Math.min(sta,stb,stc,std));
+        $("#rcp1").text(sca-Math.min(sca,scb,scc,scd));$("#rcb1").text(scb-Math.min(sca,scb,scc,scd));
+        $("#rcp2").text(scc-Math.min(sca,scb,scc,scd));$("#rcb2").text(scd-Math.min(sca,scb,scc,scd));
+        $("#rqp1").text(sqa-Math.min(sqa,sqb,sqc,sqd));$("#rqb1").text(sqb-Math.min(sqa,sqb,sqc,sqd));
+        $("#rqp2").text(sqc-Math.min(sqa,sqb,sqc,sqd));$("#rqb2").text(sqd-Math.min(sqa,sqb,sqc,sqd));
+        $("#rsp1").text(ssa-Math.min(ssa,ssb,ssc,ssd));$("#rsb1").text(ssb-Math.min(ssa,ssb,ssc,ssd));
+        $("#rsp2").text(ssc-Math.min(ssa,ssb,ssc,ssd));$("#rsb2").text(ssd-Math.min(ssa,ssb,ssc,ssd));
+    }
+    </script>
+    
+        
+        <body>
+    <table id="Castell" data-role="table" >
+        <tr>
+            <th>Plena 1(A)</th>
+            <th>Buida 1(B)</th>
+            <th>Plena 2(C)</th>
+            <th>Buida 2(D)</th>
+        </tr>
+        <tr>
+            <td>
+                <select id="QuintesP1"/>
+            </td>
+            <td>
+                <select id="QuintesB1"/>
+            </td>
+            <td>
+                <select id="QuintesP2"/>
+            </td>
+            <td>
+                <select id="QuintesB2"/>
+            </td>
+        </tr>
+         <tr>
+            <td>
+                <select id="QuartsP1"/>
+            </td>
+            <td>
+                <select id="QuartsB1"/>
+            </td>
+            <td>
+                <select id="QuartsP2"/>
+            </td>
+            <td>
+                <select id="QuartsB2"/>
+            </td>
+        </tr>
+         <tr>
+            <td>
+                <select id="TersosP1"/>
+            </td>
+            <td>
+                <select id="TersosB1"/>
+            </td>
+            <td>
+                <select id="TersosP2"/>
+            </td>
+            <td>
+                <select id="TersosB2"/>
+            </td>
+        </tr>
+         <tr>
+            <td>
+                <select id="SegonsP1"/>
+            </td>
+            <td>
+                <select id="SegonsB1"/>
+            </td>
+            <td>
+                <select id="SegonsP2"/>
+            </td>
+            <td>
+                <select id="SegonsB2"/>
+            </td>
+        </tr>
+         <tr>
+            <td>
+                <select id="BaixosFP1"/>
+            </td>
+            <td>
+                <select id="BaixosFB1"/>
+            </td>
+            <td>
+                <select id="BaixosFP2"/>
+            </td>
+            <td>
+                <select id="BaixosFB2"/>
+            </td>
+        </tr>
+         <tr>
+            <td>
+                <select id="BaixosP1"/>
+            </td>
+            <td>
+                <select id="BaixosB1"/>
+            </td>
+            <td>
+                <select id="BaixosP2"/>
+            </td>
+            <td>
+                <select id="BaixosB2"/>
+            </td>
+        </tr>
+    </table>
+
+<table id="Alsades" data-role="table" border="1" >
+        <tr>
+            <th>POSICIO</th>
+            <th>+ BAIXA</th>
+            <th>DIF A</th>
+            <th>DIF B</th>
+            <th>DIF C</th>
+            <th>DIF D</th>
+            
+        </tr>
+        <tr>
+            <td>
+                A sisens
+            </td>
+            <td id="mas">
+            </td>
+            <td id="rsp1">
+            </td>
+            <td id="rsb1">
+            </td>
+            <td id="rsp2">
+            </td>
+            <td id="rsb2">
+            </td>
+        </tr>
+         <tr>
+            <td>
+                A quints
+            </td>
+            <td id="maq">
+            </td>
+            <td id="rqp1">
+            </td>
+            <td id="rqb1">
+            </td>
+            <td id="rqp2">
+            </td>
+            <td id="rqb2">
+            </td>
+        </tr>
+         <tr>
+            <td>
+                A quarts
+          </td>
+            <td id="mac">
+            </td>
+            <td id="rcp1">
+            </td>
+            <td id="rcb1">
+            </td>
+            <td id="rcp2">
+            </td>
+            <td id="rcb2">
+            </td>
+        </tr>
+         <tr>
+            <td>
+                A terços
+           </td>
+            <td id="mat">
+            </td>
+            <td id="rtp1">
+            </td>
+            <td id="rtb1">
+            </td>
+            <td id="rtp2">
+            </td>
+            <td id="rtb2">
+            </td>
+        </tr>
+         <tr>
+            <td>
+                A segons
+            </td>
+            <td id="mafb">
+            </td>
+            <td id="rfbp1">
+            </td>
+            <td id="rfbb1">
+            </td>
+            <td id="rfbp2">
+            </td>
+            <td id="rfbb2">
+            </td>
+        </tr>
+         <tr>
+            <td>
+                A baixos
+            </td>
+            <td id="mab">
+            </td>
+            <td id="rbp1">
+            </td>
+            <td id="rbb1">
+            </td>
+            <td id="rbp2">
+            </td>
+            <td id="rbb2">
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>
