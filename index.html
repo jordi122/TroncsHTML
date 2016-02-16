@@ -9,7 +9,7 @@
     <script src="external/jquery/jquery.js"></script>
     <script src="jquery-ui.min.js"></script>
     <script>
-		$(function() {
+        $(function() {
 				$("#QuintesP1").load("textdata/Quintes.txt");
                 $("#QuintesP2").load("textdata/Quintes.txt");
                 $("#QuintesB1").load("textdata/Quintes.txt");
@@ -35,12 +35,30 @@
                 $("#BaixosB1").load("textdata/Baixos.txt");
                 $("#BaixosB2").load("textdata/Baixos.txt");
                 $( "select" ).change(function(){actualitza();});
+                loadDatabase();
     });
-	</script>
     
+    function loadDatabase() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'castellers.db', true);
+        xhr.responseType = 'arraybuffer';
+        xhr.onload = function(e) {
+            var uInt8Array = new Uint8Array(this.response);
+            var db = new SQL.Database(uInt8Array);
+            var contents = db.exec("SELECT * FROM castellers");
+            var output = '';
+            $.each(contents[0].values, function(index, value){
+                 output += '<li><a href="#">' +contents[0].values[index][1]+ '</a></li>';
+            });
+            $('#searchPage').html(output).listview("refresh");
+    };
+    xhr.send();
+    }
+
+    </script>
+
     <script type="text/javascript">
-    
-    function compara(v1,v2,v3,v4) {
+        function compara(v1,v2,v3,v4) {
         var retorn = "";
         if (v1 == Math.min(v1,v2,v3,v4)) retorn = retorn+"A";
         if (v2 == Math.min(v1,v2,v3,v4)) retorn = retorn+"B";
@@ -81,203 +99,206 @@
         $("#rsp2").text(ssc-Math.min(ssa,ssb,ssc,ssd));$("#rsb2").text(ssd-Math.min(ssa,ssb,ssc,ssd));
     }
     </script>
-    
-        
-        <body>
-    <table id="Castell" data-role="table" >
-        <tr>
-            <th>Plena 1(A)</th>
-            <th>Buida 1(B)</th>
-            <th>Plena 2(C)</th>
-            <th>Buida 2(D)</th>
-        </tr>
-        <tr>
-            <td>
-                <select id="QuintesP1"/>
-            </td>
-            <td>
-                <select id="QuintesB1"/>
-            </td>
-            <td>
-                <select id="QuintesP2"/>
-            </td>
-            <td>
-                <select id="QuintesB2"/>
-            </td>
-        </tr>
-         <tr>
-            <td>
-                <select id="QuartsP1"/>
-            </td>
-            <td>
-                <select id="QuartsB1"/>
-            </td>
-            <td>
-                <select id="QuartsP2"/>
-            </td>
-            <td>
-                <select id="QuartsB2"/>
-            </td>
-        </tr>
-         <tr>
-            <td>
-                <select id="TersosP1"/>
-            </td>
-            <td>
-                <select id="TersosB1"/>
-            </td>
-            <td>
-                <select id="TersosP2"/>
-            </td>
-            <td>
-                <select id="TersosB2"/>
-            </td>
-        </tr>
-         <tr>
-            <td>
-                <select id="SegonsP1"/>
-            </td>
-            <td>
-                <select id="SegonsB1"/>
-            </td>
-            <td>
-                <select id="SegonsP2"/>
-            </td>
-            <td>
-                <select id="SegonsB2"/>
-            </td>
-        </tr>
-         <tr>
-            <td>
-                <select id="BaixosFP1"/>
-            </td>
-            <td>
-                <select id="BaixosFB1"/>
-            </td>
-            <td>
-                <select id="BaixosFP2"/>
-            </td>
-            <td>
-                <select id="BaixosFB2"/>
-            </td>
-        </tr>
-         <tr>
-            <td>
-                <select id="BaixosP1"/>
-            </td>
-            <td>
-                <select id="BaixosB1"/>
-            </td>
-            <td>
-                <select id="BaixosP2"/>
-            </td>
-            <td>
-                <select id="BaixosB2"/>
-            </td>
-        </tr>
-    </table>
 
-<table id="Alsades" data-role="table" border="1" >
-        <tr>
-            <th>POSICIO</th>
-            <th>+ BAIXA</th>
-            <th>DIF A</th>
-            <th>DIF B</th>
-            <th>DIF C</th>
-            <th>DIF D</th>
-            
-        </tr>
-        <tr>
-            <td>
-                A sisens
-            </td>
-            <td id="mas">
-            </td>
-            <td id="rsp1">
-            </td>
-            <td id="rsb1">
-            </td>
-            <td id="rsp2">
-            </td>
-            <td id="rsb2">
-            </td>
-        </tr>
-         <tr>
-            <td>
-                A quints
-            </td>
-            <td id="maq">
-            </td>
-            <td id="rqp1">
-            </td>
-            <td id="rqb1">
-            </td>
-            <td id="rqp2">
-            </td>
-            <td id="rqb2">
-            </td>
-        </tr>
-         <tr>
-            <td>
-                A quarts
-          </td>
-            <td id="mac">
-            </td>
-            <td id="rcp1">
-            </td>
-            <td id="rcb1">
-            </td>
-            <td id="rcp2">
-            </td>
-            <td id="rcb2">
-            </td>
-        </tr>
-         <tr>
-            <td>
-                A terços
-           </td>
-            <td id="mat">
-            </td>
-            <td id="rtp1">
-            </td>
-            <td id="rtb1">
-            </td>
-            <td id="rtp2">
-            </td>
-            <td id="rtb2">
-            </td>
-        </tr>
-         <tr>
-            <td>
-                A segons
-            </td>
-            <td id="mafb">
-            </td>
-            <td id="rfbp1">
-            </td>
-            <td id="rfbb1">
-            </td>
-            <td id="rfbp2">
-            </td>
-            <td id="rfbb2">
-            </td>
-        </tr>
-         <tr>
-            <td>
-                A baixos
-            </td>
-            <td id="mab">
-            </td>
-            <td id="rbp1">
-            </td>
-            <td id="rbb1">
-            </td>
-            <td id="rbp2">
-            </td>
-            <td id="rbb2">
-            </td>
-        </tr>
-    </table>
-</body>
+    <body>
+        <table id="Castell" data-role="table" width="100%">
+            <tr>
+                <th>Plena 1(A)</th>
+                <th>Buida 1(B)</th>
+                <th>Plena 2(C)</th>
+                <th>Buida 2(D)</th>
+            </tr>
+            <tr>
+                <td>
+                    <select id="QuintesP1" />
+                </td>
+                <td>
+                    <select id="QuintesB1" />
+                </td>
+                <td>
+                    <select id="QuintesP2" />
+                </td>
+                <td>
+                    <select id="QuintesB2" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <select id="QuartsP1" />
+                </td>
+                <td>
+                    <select id="QuartsB1" />
+                </td>
+                <td>
+                    <select id="QuartsP2" />
+                </td>
+                <td>
+                    <select id="QuartsB2" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <select id="TersosP1" />
+                </td>
+                <td>
+                    <select id="TersosB1" />
+                </td>
+                <td>
+                    <select id="TersosP2" />
+                </td>
+                <td>
+                    <select id="TersosB2" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <select id="SegonsP1" />
+                </td>
+                <td>
+                    <select id="SegonsB1" />
+                </td>
+                <td>
+                    <select id="SegonsP2" />
+                </td>
+                <td>
+                    <select id="SegonsB2" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <select id="BaixosFP1" />
+                </td>
+                <td>
+                    <select id="BaixosFB1" />
+                </td>
+                <td>
+                    <select id="BaixosFP2" />
+                </td>
+                <td>
+                    <select id="BaixosFB2" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <select id="BaixosP1" />
+                </td>
+                <td>
+                    <select id="BaixosB1" />
+                </td>
+                <td>
+                    <select id="BaixosP2" />
+                </td>
+                <td>
+                    <select id="BaixosB2" />
+                </td>
+            </tr>
+        </table>
+
+        <table id="Alsades" data-role="table" border="1" width="100%" >
+            <tr>
+                <th>POSICIO</th>
+                <th>+ BAIXA</th>
+                <th>DIF A</th>
+                <th>DIF B</th>
+                <th>DIF C</th>
+                <th>DIF D</th>
+
+            </tr>
+            <tr>
+                <td>
+                    A sisens
+                </td>
+                <td id="mas">
+                </td>
+                <td id="rsp1">
+                </td>
+                <td id="rsb1">
+                </td>
+                <td id="rsp2">
+                </td>
+                <td id="rsb2">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    A quints
+                </td>
+                <td id="maq">
+                </td>
+                <td id="rqp1">
+                </td>
+                <td id="rqb1">
+                </td>
+                <td id="rqp2">
+                </td>
+                <td id="rqb2">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    A quarts
+                </td>
+                <td id="mac">
+                </td>
+                <td id="rcp1">
+                </td>
+                <td id="rcb1">
+                </td>
+                <td id="rcp2">
+                </td>
+                <td id="rcb2">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    A terços
+                </td>
+                <td id="mat">
+                </td>
+                <td id="rtp1">
+                </td>
+                <td id="rtb1">
+                </td>
+                <td id="rtp2">
+                </td>
+                <td id="rtb2">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    A segons
+                </td>
+                <td id="mafb">
+                </td>
+                <td id="rfbp1">
+                </td>
+                <td id="rfbb1">
+                </td>
+                <td id="rfbp2">
+                </td>
+                <td id="rfbb2">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    A baixos
+                </td>
+                <td id="mab">
+                </td>
+                <td id="rbp1">
+                </td>
+                <td id="rbb1">
+                </td>
+                <td id="rbp2">
+                </td>
+                <td id="rbb2">
+                </td>
+            </tr>
+        </table>
+        <ul data-role="listview" data-title="Search" id="searchPage">
+
+				</ul>
+                <p id="llista">polles</p>
+    </body>
 
 </html>
